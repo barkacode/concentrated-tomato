@@ -9,24 +9,32 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
-import { formatTime, DEFAULT_TIMES } from "@/utils/time";
+import {
+  formatTime,
+  PomodoroStage,
+  getStageDuration,
+  getStageMessage,
+  getStageTitle,
+} from "@/utils/time";
 
 interface SettingsProps {
   setTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Settings = ({ setTime }: SettingsProps) => {
-  const [mode, setMode] = useState<keyof typeof DEFAULT_TIMES>("work");
-  const [selectedTime, setSelectedTime] = useState<number>(DEFAULT_TIMES[mode]);
+  const [mode, setMode] = useState<PomodoroStage>("work");
+  const [selectedTime, setSelectedTime] = useState<number>(
+    getStageDuration("work")
+  );
   const [open, setOpen] = useState<boolean>(false);
 
   const onClick = (value: number) => {
     setSelectedTime((prev) => prev + value);
   };
 
-  const handleModeChange = (newMode: "work" | "pause" | "break") => {
+  const handleModeChange = (newMode: PomodoroStage) => {
     setMode(newMode);
-    const newTime = DEFAULT_TIMES[newMode];
+    const newTime = getStageDuration(newMode);
     setSelectedTime(newTime);
   };
 
@@ -36,6 +44,12 @@ const Settings = ({ setTime }: SettingsProps) => {
     }
     setOpen(false);
   };
+
+  const periods: { id: PomodoroStage; label: string; icon: string }[] = [
+    { id: "work", label: "Work", icon: "🔥" },
+    { id: "shortBreak", label: "Pause", icon: "☕" },
+    { id: "longBreak", label: "Break", icon: "😴" },
+  ];
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
@@ -75,20 +89,14 @@ const Settings = ({ setTime }: SettingsProps) => {
           </div>
 
           <div className="flex space-x-4 mt-4">
-            {[
-              { id: "work", label: "Work", icon: "🔥" },
-              { id: "pause", label: "Pause", icon: "☕" },
-              { id: "break", label: "Break", icon: "😴" },
-            ].map((period) => (
+            {periods.map((period) => (
               <div key={period.id} className="flex flex-1">
                 <input
                   type="radio"
                   name="period"
                   id={period.id}
                   checked={mode === period.id}
-                  onChange={() =>
-                    handleModeChange(period.id as keyof typeof DEFAULT_TIMES)
-                  }
+                  onChange={() => handleModeChange(period.id)}
                   className="hidden peer"
                 />
                 <label
