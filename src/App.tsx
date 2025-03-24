@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import Settings from "./components/Settings";
-import { formatTime, DEFAULT_TIMES } from "./utils/time";
+import {
+  PomodoroStage,
+  formatTime,
+  getStageDuration,
+  getStageMessage,
+  getStageTitle,
+} from "./utils/time";
 
 const App = () => {
-  const [initTime, setInitTime] = useState<number>(DEFAULT_TIMES.work);
+  const [initTime, setInitTime] = useState<number>(getStageDuration("work"));
   const [timeLeft, setTimeLeft] = useState<number>(initTime);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
-  const [stage, setStage] = useState<number>(0);
+  const [stage, setStage] = useState<PomodoroStage>("work");
 
   const handleStart = () => {
     if (Notification.permission !== "granted") {
@@ -35,19 +41,17 @@ const App = () => {
 
   const nextStep = () => {
     const newStep = step + 1;
-    let newStage: number;
+    let newStage: PomodoroStage;
 
     if (newStep % 8 === 0) {
-      newStage = 2; // break
+      newStage = "longBreak";
     } else if (newStep % 2 === 0) {
-      newStage = 1; // pause
+      newStage = "shortBreak";
     } else {
-      newStage = 0; // travail
+      newStage = "work";
     }
 
-    const stageNames = Object.keys(DEFAULT_TIMES);
-    const newTime =
-      DEFAULT_TIMES[stageNames[newStage] as keyof typeof DEFAULT_TIMES];
+    const newTime = getStageDuration(newStage);
 
     setTimeLeft(newTime);
     setInitTime(newTime);
@@ -56,8 +60,7 @@ const App = () => {
 
     playSound();
 
-    const titles = ["Back to work!", "Take a break!", "Take a long break!"];
-    showNotification(titles[newStage]);
+    showNotification(getStageMessage(newStage));
   };
 
   useEffect(() => {
@@ -87,7 +90,7 @@ const App = () => {
     <div className="bg-background text-foreground h-screen flex flex-col items-center">
       <div className="text-6xl py-8">concentrated tomato</div>
       <div className="text-4xl capitalize">
-        {Object.keys(DEFAULT_TIMES)[stage]}
+        {getStageTitle(stage)} {stage === "work" ? `#${(step + 1) / 2}` : "☕️"}
       </div>
       <div className="flex flex-col h-full justify-center">
         <Settings
