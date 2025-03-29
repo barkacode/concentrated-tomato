@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { Button } from "./ui/button";
 import {
@@ -9,41 +9,43 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
-import {
-  formatTime,
-  PomodoroStage,
-  getStageDuration,
-  getStageMessage,
-  getStageTitle,
-} from "@/utils/time";
+import { formatTime, PomodoroStage, getStageDuration } from "@/utils/time";
 
 interface SettingsProps {
-  setTime: React.Dispatch<React.SetStateAction<number>>;
+  setStage: (stage: PomodoroStage) => void;
+  currentStage: PomodoroStage;
 }
 
-const Settings = ({ setTime }: SettingsProps) => {
-  const [mode, setMode] = useState<PomodoroStage>("work");
+const Settings = ({ setStage, currentStage }: SettingsProps) => {
   const [selectedTime, setSelectedTime] = useState<number>(
-    getStageDuration("work")
+    getStageDuration(currentStage)
   );
+  const [selectedStage, setSelectedStage] = useState<PomodoroStage>(currentStage);
   const [open, setOpen] = useState<boolean>(false);
 
   const onClick = (value: number) => {
     setSelectedTime((prev) => prev + value);
   };
 
-  const handleModeChange = (newMode: PomodoroStage) => {
-    setMode(newMode);
-    const newTime = getStageDuration(newMode);
+  const handleStageChange = (newStage: PomodoroStage) => {
+    setSelectedStage(newStage);
+    const newTime = getStageDuration(newStage);
     setSelectedTime(newTime);
   };
 
   const onClose = (isValidated: boolean) => {
     if (isValidated) {
-      setTime(selectedTime);
+      setStage(selectedStage);
     }
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (!open){
+      setSelectedTime(getStageDuration(currentStage));
+      setSelectedStage(currentStage);
+    }
+  }, [currentStage]);
 
   const periods: { id: PomodoroStage; label: string; icon: string }[] = [
     { id: "work", label: "Work", icon: "🔥" },
@@ -95,8 +97,8 @@ const Settings = ({ setTime }: SettingsProps) => {
                   type="radio"
                   name="period"
                   id={period.id}
-                  checked={mode === period.id}
-                  onChange={() => handleModeChange(period.id)}
+                  checked={selectedStage === period.id}
+                  onChange={() => handleStageChange(period.id)}
                   className="hidden peer"
                 />
                 <label
