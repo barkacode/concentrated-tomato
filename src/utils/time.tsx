@@ -10,8 +10,8 @@ interface PomodoroConfig {
   duration: number;
   title: string;
   message: string;
-  color?: string; // Optionnel pour le futur
-  sound?: string; // Optionnel pour le futur
+  color?: string;
+  sound?: string; 
 }
 
 // 2. Configuration centralisée et typée
@@ -27,7 +27,7 @@ export const POMODORO_CONFIG: Record<PomodoroStage, PomodoroConfig> = {
     message: "Take a short break!",
   },
   longBreak: {
-    duration: 15 * 60, // 15 minutes
+    duration: 15 * 60, // 15 minutes en secondes
     title: "Long Break",
     message: "Take a long break!",
   },
