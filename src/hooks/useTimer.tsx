@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { PomodoroStage, getStageDuration, getStageMessage, getStageTitle, formatTime } from "@/utils/time";
+import {
+  PomodoroStage,
+  getStageDuration,
+  getStageMessage,
+  getStageTitle,
+  formatTime,
+} from "@/utils/time";
 import { playSound, showNotification } from "@/utils/notification";
 
 export const useTimer = () => {
@@ -79,8 +85,8 @@ export const useTimer = () => {
     step,
     handleStart,
     reset,
-    setStage,
     formatTime,
     getStageTitle,
+    setStage,
   };
 };

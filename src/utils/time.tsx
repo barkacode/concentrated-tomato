@@ -3,7 +3,7 @@ export const formatTime = (seconds: number) => {
   const secs = seconds % 60;
   return `${mins}:${secs < 10 ? `0${secs}` : secs}`;
 };
-// 1. Définition des types
+
 export type PomodoroStage = "work" | "shortBreak" | "longBreak";
 
 interface PomodoroConfig {
@@ -11,10 +11,9 @@ interface PomodoroConfig {
   title: string;
   message: string;
   color?: string;
-  sound?: string; 
+  sound?: string;
 }
 
-// 2. Configuration centralisée et typée
 export const POMODORO_CONFIG: Record<PomodoroStage, PomodoroConfig> = {
   work: {
     duration: 25 * 60, // 25 minutes en secondes
