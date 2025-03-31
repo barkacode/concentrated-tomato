@@ -1,4 +1,5 @@
 import { Settings as SettingsIcon } from "lucide-react";
+import { Settings as SettingsIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Drawer,
@@ -12,10 +13,15 @@ import { PomodoroStage } from "@/utils/time";
 import { TimeSelector } from "./TimeSelector";
 import { StageSelector } from "./StageSelector";
 import { useSettings } from "@/hooks/useSettings";
+import { PomodoroStage } from "@/utils/time";
+import { TimeSelector } from "./TimeSelector";
+import { StageSelector } from "./StageSelector";
+import { useSettings } from "@/hooks/useSettings";
 
 interface SettingsProps {
   setStage: (stage: PomodoroStage) => void;
   currentStage: PomodoroStage;
+  className?: string;
 }
 
 const Settings = ({ setStage, currentStage }: SettingsProps) => {
@@ -53,10 +59,23 @@ const Settings = ({ setStage, currentStage }: SettingsProps) => {
             onStageChange={handleStageChange}
           />
 
+
+          <TimeSelector
+            selectedTime={selectedTime}
+            onTimeChange={handleTimeChange}
+          />
+
+          <StageSelector
+            selectedStage={selectedStage}
+            onStageChange={handleStageChange}
+          />
+
           <div className="flex mt-4 space-x-4">
+            <Button variant="outline" onClick={() => handleClose(false)}>
             <Button variant="outline" onClick={() => handleClose(false)}>
               Annuler
             </Button>
+            <Button className="flex-1" onClick={() => handleClose(true)}>
             <Button className="flex-1" onClick={() => handleClose(true)}>
               Appliquer
             </Button>
