@@ -1,8 +1,3 @@
-@font-face {
-  font-family: Londrina;
-  src: url(./assets/fonts/LondrinaSolid-Regular.ttf);
-}
-
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
@@ -84,10 +79,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@theme{
-  --font-londrina: Londrina, "sans-serif";
 }
 
 @layer base {
