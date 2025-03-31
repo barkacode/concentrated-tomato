@@ -21,7 +21,7 @@ export const Timer = () => {
         <CardTitle className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             {getStageTitle(stage)}
-            {stage === "work" ? ` #${(step + 1) / 2}` : " ☕️"}
+            {stage === "work" ? ` #${Math.ceil(step/2)}` : " ☕️"}
           </div>
           <Settings setStage={setStage} currentStage={stage} />
         </CardTitle>

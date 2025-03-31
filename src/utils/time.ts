@@ -1,3 +1,5 @@
+import { getStageDurationFromStorage } from "./localStorage";
+
 export const formatTime = (seconds: number) => {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -33,6 +35,16 @@ export const POMODORO_CONFIG: Record<PomodoroStage, PomodoroConfig> = {
 } as const;
 
 export const getStageDuration = (stage: PomodoroStage): number => {
+  // Vérifie si nous sommes dans un environnement avec localStorage (le navigateur)
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      return getStageDurationFromStorage(stage);
+    } catch (error) {
+      console.error('Error reading from localStorage:', error);
+    }
+  }
+  
+  // Fallback aux valeurs par défaut si localStorage n'est pas disponible ou en cas d'erreur
   return POMODORO_CONFIG[stage].duration;
 };
 
