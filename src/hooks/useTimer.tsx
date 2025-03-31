@@ -79,8 +79,8 @@ export const useTimer = () => {
     step,
     handleStart,
     reset,
-    setStage,
     formatTime,
     getStageTitle,
+    setStage,
   };
 };
