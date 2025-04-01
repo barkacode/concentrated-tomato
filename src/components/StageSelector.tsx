@@ -23,7 +23,7 @@ export const StageSelector = ({
         />
         <label
           htmlFor={period.id}
-          className="flex flex-1 flex-col items-center justify-center aspect-square rounded-lg ring-2 ring-neutral-800 hover:bg-neutral-800 peer  peer-checked:ring-amber-300 peer-checked:text-white "
+          className="flex flex-1 flex-col items-center justify-center aspect-square rounded-xl ring-2 ring-neutral-800 hover:bg-neutral-800 peer  peer-checked:ring-amber-300 peer-checked:text-white "
         >
           <div>
             {period.icon && <period.icon size={24} />}

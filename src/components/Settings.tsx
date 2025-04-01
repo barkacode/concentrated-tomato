@@ -3,7 +3,6 @@ import { Button } from "./ui/button";
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -53,7 +52,6 @@ const Settings = ({ setStage, currentStage }: SettingsProps) => {
             selectedStage={selectedStage}
             onStageChange={handleStageChange}
           />
-
 
           <div className="flex mt-4 space-x-4">
             <Button variant="outline" onClick={() => handleClose(false)}>
