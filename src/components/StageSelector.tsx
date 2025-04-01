@@ -23,10 +23,12 @@ export const StageSelector = ({
         />
         <label
           htmlFor={period.id}
-          className="flex flex-1 flex-col items-center rounded-lg peer bg-neutral-400 text-black px-4 peer-checked:bg-rose-500 peer-checked:text-white"
+          className="flex flex-1 flex-col items-center justify-center aspect-square rounded-lg ring-2 ring-neutral-800 hover:bg-neutral-800 peer  peer-checked:ring-amber-300 peer-checked:text-white "
         >
-          <div>{period.label}</div>
-          <div>{period.icon}</div>
+          <div>
+            {period.icon && <period.icon size={24} />}
+          </div>
+          <div className="text-lg font-medium ">{period.label}</div>
         </label>
       </div>
     ))}
