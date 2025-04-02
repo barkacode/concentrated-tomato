@@ -21,7 +21,7 @@ export const Timer = () => {
         <CardTitle className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             {getStageTitle(stage)}
-            {stage === "work" ? ` #${(step + 1) / 2}` : " ☕️"}
+            {stage === "work" ? ` #${Math.ceil(step/2)}` : " ☕️"}
           </div>
           <Settings setStage={setStage} currentStage={stage} />
         </CardTitle>
@@ -32,10 +32,10 @@ export const Timer = () => {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between gap-2">
-        <Button className="flex-1 bg-amber-300" onClick={handleStart}>
+        <Button variant="default" className="flex-1" onClick={handleStart}>
           {isRunning ? "Pause" : "Start"}
         </Button>
-        <Button className="group" onClick={reset}>
+        <Button variant="secondary" className="group" onClick={reset}>
           <RotateCcw className="transition-transform group-active:-rotate-90" />
         </Button>
       </CardFooter>

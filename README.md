@@ -1,54 +1,119 @@
-# React + TypeScript + Vite
+# Concentrated Tomato 🍅
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Pomodoro timer application built with React, TypeScript, and Tailwind CSS. Stay focused and productive with this beautiful, minimalist timer that helps you manage your work and break sessions effectively.
 
-Currently, two official plugins are available:
+## 🌟 About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Concentrated Tomato is a productivity tool that implements the Pomodoro Technique, a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks.
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ⚡️ Built with Vite for lightning-fast development
+- 🎯 TypeScript for type safety
+- 🎨 Tailwind CSS for styling
+- 📱 Responsive design
+- 🧩 Component-based architecture
+- 🔧 Modern development tools and best practices
+- ⏱️ Customizable work and break durations
+- 🔄 Automatic session tracking
+- 🎨 Beautiful, minimalist UI
+- 🔊 Sound notifications (optional)
+- 🌙 Dark mode support
+- 💾 Local storage for session history
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🎯 How It Works
+
+1. **Work Session**: Focus on your task for 25 minutes
+2. **Short Break**: Take a 5-minute break
+3. **Repeat**: Complete 4 work sessions
+4. **Long Break**: Take a longer 15-30 minute break
+5. **Start Over**: Begin the cycle again
+
+## 📋 Prerequisites
+
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+
+## 🛠️ Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/barkacode/concentrated-tomato.git
+cd concentrated-tomato
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. Install dependencies:
+```bash
+npm install
 ```
+
+## 🚀 Development
+
+To start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## 🏗️ Build
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+To preview the production build:
+
+```bash
+npm run preview
+```
+
+## 🧪 Linting
+
+To run the linter:
+
+```bash
+npm run lint
+```
+
+## 🏗️ Project Structure
+
+```
+concentrated-tomato/
+├── src/
+│   ├── assets/      # Static assets
+│   ├── components/  # React components
+│   ├── config/      # Configuration files
+│   ├── hooks/       # Custom React hooks
+│   ├── lib/         # Utility libraries
+│   ├── utils/       # Utility functions
+│   ├── App.tsx      # Main application component
+│   └── main.tsx     # Application entry point
+├── public/          # Public static files
+└── index.html       # HTML entry point
+```
+
+## 🛠️ Tech Stack
+
+- [React](https://reactjs.org/) - UI Library
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
+- [Vite](https://vitejs.dev/) - Build Tool
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Shadcn/ui](https://ui.shadcn.com/) - UI Components
+- [ESLint](https://eslint.org/) - Code Linting
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+

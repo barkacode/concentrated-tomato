@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   PomodoroStage,
   getStageDuration,
   getStageMessage,
-  getStageTitle,
-  formatTime,
 } from "@/utils/time";
 import { playSound, showNotification } from "@/utils/notification";
+import { addSettingsChangeListener } from "@/utils/localStorage";
 
 export const useTimer = () => {
   const [initTime, setInitTime] = useState<number>(getStageDuration("work"));
@@ -22,12 +21,22 @@ export const useTimer = () => {
     setIsRunning((prev) => !prev);
   };
 
-  const reset = () => {
-    setTimeLeft(initTime);
+  const reset = useCallback(() => {
+    const currentDuration = getStageDuration(stage);
+    setInitTime(currentDuration);
+    setTimeLeft(currentDuration);
     setIsRunning(false);
-  };
+  }, [stage]);
 
-  const nextStep = () => {
+  const changeStage = useCallback((newStage: PomodoroStage) => {
+    const newTime = getStageDuration(newStage);
+    setTimeLeft(newTime);
+    setInitTime(newTime);
+    setStage(newStage);
+    setIsRunning(false);
+  }, []);
+
+  const nextStep = useCallback(() => {
     const newStep = step + 1;
     let newStage: PomodoroStage;
 
@@ -48,7 +57,21 @@ export const useTimer = () => {
     playSound();
     showNotification(getStageMessage(newStage));
     setIsRunning(true);
-  };
+  }, [step]);
+
+  useEffect(() => {
+    const handleSettingsChange = () => {
+      if (!isRunning) {
+        const newDuration = getStageDuration(stage);
+        setInitTime(newDuration);
+        setTimeLeft(newDuration);
+      }
+    };
+
+    const unsubscribe = addSettingsChangeListener(handleSettingsChange);
+
+    return () => unsubscribe();
+  }, [stage, isRunning]);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -71,11 +94,13 @@ export const useTimer = () => {
     const timeout = setTimeout(nextStep, 10);
 
     return () => clearTimeout(timeout);
-  }, [timeLeft, isRunning]);
+  }, [timeLeft, isRunning, nextStep]);
 
   useEffect(() => {
-    setInitTime(getStageDuration(stage));
-    setTimeLeft(getStageDuration(stage));
+    const currentDuration = getStageDuration(stage);
+    setInitTime(currentDuration);
+    setTimeLeft(currentDuration);
+    
   }, [stage]);
 
   return {
@@ -85,8 +110,6 @@ export const useTimer = () => {
     step,
     handleStart,
     reset,
-    formatTime,
-    getStageTitle,
-    setStage,
+    setStage: changeStage,
   };
 };

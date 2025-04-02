@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { PomodoroStage, getStageDuration } from "@/utils/time";
+import { PomodoroStage, getStageDuration, POMODORO_CONFIG } from "@/utils/time";
+import { setStageDurationInStorage, saveSettings, getDefaultSettings } from "@/utils/localStorage";
 
 interface UseSettingsProps {
   currentStage: PomodoroStage;
@@ -12,7 +13,13 @@ export const useSettings = ({ currentStage, onStageChange }: UseSettingsProps) =
   const [open, setOpen] = useState<boolean>(false);
 
   const handleTimeChange = (value: number) => {
-    setSelectedTime((prev) => prev + value);
+    setSelectedTime((prev) => {
+      // Limite min: 1 minute, max: 60 minutes
+      const newValue = prev + value;
+      if (newValue < 60) return 60; // Minimum 1 minute
+      if (newValue > 3600) return 3600; // Maximum 60 minutes
+      return newValue;
+    });
   };
 
   const handleStageChange = (newStage: PomodoroStage) => {
@@ -22,9 +29,23 @@ export const useSettings = ({ currentStage, onStageChange }: UseSettingsProps) =
 
   const handleClose = (isValidated: boolean) => {
     if (isValidated) {
-      onStageChange(selectedStage);
+      // Sauvegarder la nouvelle durée dans localStorage
+      if (selectedTime !== getStageDuration(selectedStage)) {
+        setStageDurationInStorage(selectedStage, selectedTime);
+      }
+      
+      // Si on change de stage ou on est sur le même stage avec une nouvelle durée
+      if (selectedStage !== currentStage || selectedTime !== getStageDuration(currentStage)) {
+        onStageChange(selectedStage);
+      }
     }
     setOpen(false);
+  };
+
+  const resetToDefaults = () => {
+    saveSettings(getDefaultSettings());
+    setSelectedTime(POMODORO_CONFIG[selectedStage].duration);
+    onStageChange(selectedStage);
   };
 
   useEffect(() => {
@@ -42,5 +63,6 @@ export const useSettings = ({ currentStage, onStageChange }: UseSettingsProps) =
     handleTimeChange,
     handleStageChange,
     handleClose,
+    resetToDefaults,
   };
 }; 
