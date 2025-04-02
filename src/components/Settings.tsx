@@ -1,4 +1,4 @@
-import { Settings as SettingsIcon, RotateCcw, Info } from "lucide-react";
+import { Settings as SettingsIcon, Info } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Drawer,
