@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { PomodoroStage, getStageDuration } from "@/utils/time";
-import { setStageDurationInStorage } from "@/utils/localStorage";
+import { PomodoroStage, getStageDuration, POMODORO_CONFIG } from "@/utils/time";
+import { setStageDurationInStorage, saveSettings, getDefaultSettings } from "@/utils/localStorage";
 
 interface UseSettingsProps {
   currentStage: PomodoroStage;
@@ -42,6 +42,12 @@ export const useSettings = ({ currentStage, onStageChange }: UseSettingsProps) =
     setOpen(false);
   };
 
+  const resetToDefaults = () => {
+    saveSettings(getDefaultSettings());
+    setSelectedTime(POMODORO_CONFIG[selectedStage].duration);
+    onStageChange(selectedStage);
+  };
+
   useEffect(() => {
     if (!open) {
       setSelectedTime(getStageDuration(currentStage));
@@ -57,5 +63,6 @@ export const useSettings = ({ currentStage, onStageChange }: UseSettingsProps) =
     handleTimeChange,
     handleStageChange,
     handleClose,
+    resetToDefaults,
   };
 }; 
