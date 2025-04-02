@@ -3,7 +3,6 @@ import { Button } from "./ui/button";
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -42,7 +41,6 @@ const Settings = ({ setStage, currentStage }: SettingsProps) => {
         <div className="mx-auto w-full max-w-sm py-4">
           <DrawerHeader>
             <DrawerTitle>Réglage du pomodoro</DrawerTitle>
-            <DrawerDescription>Réglez la durée du pomodoro</DrawerDescription>
           </DrawerHeader>
 
           <TimeSelector
@@ -55,12 +53,11 @@ const Settings = ({ setStage, currentStage }: SettingsProps) => {
             onStageChange={handleStageChange}
           />
 
-
           <div className="flex mt-4 space-x-4">
             <Button variant="outline" onClick={() => handleClose(false)}>
               Annuler
             </Button>
-            <Button className="flex-1" onClick={() => handleClose(true)}>
+            <Button variant="default" className="flex-1"  onClick={() => handleClose(true)}>
               Appliquer
             </Button>
           </div>
