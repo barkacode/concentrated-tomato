@@ -2,6 +2,8 @@
 
 A modern Pomodoro timer application built with React, TypeScript, and Tailwind CSS. Stay focused and productive with this beautiful, minimalist timer that helps you manage your work and break sessions effectively.
 
+Available at https://concentrated-tomato.vercel.app/
+
 ## 🌟 About
 
 Concentrated Tomato is a productivity tool that implements the Pomodoro Technique, a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks.
